@@ -1,0 +1,3 @@
+repo,url,commit,g,a,v,rg,ra,rv,packages
+libjitsi,https://github.com/jitsi/libjitsi,c28518bbb5bdc4cbcda563227526dc3f16e1b098,com.googlecode.json-simple,json-simple,*,se.kth.assert,json-simple-over-json,1.0-SNAPSHOT,org/json/simple
+libjitsi,https://github.com/jitsi/libjitsi,c28518bbb5bdc4cbcda563227526dc3f16e1b098,com.googlecode.json-simple,json-simple,*,se.kth.assert,json-simple-over-gson,1.0-SNAPSHOT,org/json/simple

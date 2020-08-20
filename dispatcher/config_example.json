@@ -1,0 +1,28 @@
+{
+  "steps": [
+    {
+      "step": "clone_repo",
+      "parameters": [
+        "commit","repo","url"
+      ],
+      "output":["commit"]
+    },
+    {
+      "step": "cd",
+      "parameters": [
+        "repo"
+      ],
+      "output":[]
+    },
+    {
+      "step": "mvn_compile",
+      "parameters": [],
+      "output":[]
+    },
+    {
+      "step": "mvn_test",
+      "parameters": [],
+      "output":["nb_test"]
+    }
+  ]
+}

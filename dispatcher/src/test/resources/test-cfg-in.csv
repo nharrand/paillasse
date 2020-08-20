@@ -1,0 +1,7 @@
+repo,url,commit,g,a,v,rg,ra,rv,packages
+jicofo,https://github.com/jitsi/jicofo,660b78e3de04a977f5e9e374b395e277d9f402f1,com.googlecode.json-simple,json-simple,*,se.kth.assert,json-simple-over-json,1.0-SNAPSHOT,org/json/simple
+jicofo,https://github.com/jitsi/jicofo,660b78e3de04a977f5e9e374b395e277d9f402f1,com.googlecode.json-simple,json-simple,*,se.kth.assert,json-simple-over-gson,1.0-SNAPSHOT,org/json/simple
+jicofo,https://github.com/jitsi/jicofo,9b42a8a469d38702743d491842fd1bde84df7a3f,com.googlecode.json-simple,json-simple,*,se.kth.assert,json-simple-over-json,1.0-SNAPSHOT,org/json/simple
+jicofo,https://github.com/jitsi/jicofo,9b42a8a469d38702743d491842fd1bde84df7a3f,com.googlecode.json-simple,json-simple,*,se.kth.assert,json-simple-over-gson,1.0-SNAPSHOT,org/json/simple
+jicofo,https://github.com/jitsi/jicofo,d64fdd91d5076899d7e7c23e5c0959ec3c5e580d,com.googlecode.json-simple,json-simple,*,se.kth.assert,json-simple-over-json,1.0-SNAPSHOT,org/json/simple
+jicofo,https://github.com/jitsi/jicofo,d64fdd91d5076899d7e7c23e5c0959ec3c5e580d,com.googlecode.json-simple,json-simple,*,se.kth.assert,json-simple-over-gson,1.0-SNAPSHOT,org/json/simple
