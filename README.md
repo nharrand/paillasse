@@ -89,10 +89,8 @@ Running a worker instance:
 docker run -v /path/to/your/workdir:/workdir --network="host" paillasse-worker
 ```
 
-
-
 Supervising the experiment
 
-Open `http://server-ip:server-port/` in your browser.
+Open `http://server-ip:8090/tables` in your browser.
 
 
