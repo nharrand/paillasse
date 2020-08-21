@@ -1,0 +1,11 @@
+Worker,repo,commit,url,nb_test,new_experiment_line,clone_repo,cd,mvn_compile,mvn_test,EL_success
+Worker-1,fofa-java,54e7842111e1d1df137b08a4158c400e23d922e3,https://github.com/0nise/fofa-java.git,0,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true
+Worker-1,yibai-java-sdk,7c2b960cfb4e9424ddcb279f4a62f58d19fc7ade,https://github.com/100sms/yibai-java-sdk.git,3,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true
+Worker-2,httpselftest,c3d54a2222b22e44fef0b0e88b298d8bcb5d2f0b,https://github.com/1and1/httpselftest.git,null,SUCCESS,SUCCESS,SUCCESS,SUCCESS,FAILURE,false
+Worker-1,snmpman,ad514fbac17aaa0b627fd0370cb7179a42cd9a14,https://github.com/1and1/snmpman.git,58,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true
+Worker-2,hygieia-build-jenkins-collector,88ca26f63647de65fa6b1dbe09dcd9b6df7a156b,https://github.com/Hygieia/hygieia-build-jenkins-collector.git,30,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true
+Worker-1,Automotion,6ec3898b90437ab81edf5a4a0538ba0a41128229,https://github.com/ITArray/Automotion.git,5950,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true
+Worker-2,jReddit,944789e479ea0bfdb9b1a5082045f0101496a844,https://github.com/karan/jReddit.git,97,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true
+Worker-1,flume-ng-sql-source,8425b5585cd18c5f3eb06a9cff6818a04432de65,https://github.com/keedio/flume-ng-sql-source.git,18,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true
+Worker-1,jts,b57d591be10906c1729eeb8a2b7d95d4238c2a66,https://github.com/locationtech/jts.git,955,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true
+Worker-2,tika,a7245a0529e1c7fe99b9f6fd2cb564df6fcb3284,https://github.com/lafaspot/tika.git,616,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,true

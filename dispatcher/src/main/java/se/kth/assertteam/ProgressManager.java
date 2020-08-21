@@ -1,6 +1,7 @@
 package se.kth.assertteam;
 
 import org.apache.commons.io.FileUtils;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import se.kth.assertteam.exp.ExperimentLine;
 import se.kth.assertteam.exp.MalformedStepException;
@@ -119,6 +120,29 @@ public class ProgressManager {
 			}
 		}
 		System.err.println("[postResults] done");
+	}
+
+
+	synchronized public JSONObject getOverview() {
+		JSONObject res = new JSONObject();
+		res.put("pending", hostTasks.size());
+		res.put("successes", successes);
+		res.put("failures", + failures);
+		res.put("remaining", remainingTasks.size());
+		JSONArray hostStatuses = new JSONArray();
+
+		for(String host: hostTasks.keySet()) {
+			JSONObject h = new JSONObject();
+			ExperimentLine cfg = hostTasks.get(host);
+
+			h.put("tname", cfg.getName());
+			h.put("host", host);
+			h.put("step", (cfg.getCurrentStep() == null ? "null" : cfg.getCurrentStep().name));
+			hostStatuses.add(h);
+
+		}
+		res.put("hoststatuses", hostStatuses);
+		return res;
 	}
 
 

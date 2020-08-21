@@ -12,6 +12,7 @@ import java.io.File;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
+import static spark.Spark.staticFiles;
 
 public class Server {
 
@@ -28,7 +29,10 @@ public class Server {
 	private String logPath = "./pailasse.log";
 
 	@Parameter(names = {"--result", "-r"}, description = "Path to result file (Default: results.csv)")
-	private String resultsPath = "./results-pailasse.csv";
+	private String resultsPath = "resources/results-paillasse.csv";
+
+	@Parameter(names = {"--static-files", "-s"}, description = "Path to static files (Default: ./resources)")
+	private String staticFilesPath = "resources";
 
 	@Parameter(names = {"--port", "-p"}, description = "Port of the server. (Default 8080)")
 	private int port = 8080;
@@ -62,6 +66,7 @@ public class Server {
 		//Init config generator
 
 		//Setup routes
+		staticFiles.externalLocation(serverConfig.staticFilesPath);
 		port(SERVER_PORT);
 
 		//Dashboard
@@ -120,7 +125,25 @@ public class Server {
 			return "";
 		});
 
+		//Get Dashboard info
+		get("/getOverview", (Request req, Response res) -> {
+			log(req);
+			JSONObject cfg = progressManager.getOverview();
+			if(cfg == null) {
+				res.status(204);
+				return new JSONObject();
+			}
 
-		System.out.println("Unexpected");
+			res.status(200);
+
+			System.out.println("[Server] Sent config: " + cfg.toJSONString());
+
+
+			res.type("application/json");
+			return cfg.toString();
+		});
+
+
+		System.out.println("Server is running...");
 	}
 }

@@ -1,17 +1,25 @@
 #!/bin/bash
 
+SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 #local config
 DISPATCHER_URL="$1"
 
-REPOS_PATH="/home/nharrand/Documents/paillasse/test"
-JARS_PATH="/home/nharrand/Documents/paillasse/test-harness/lib"
-LOGDIR="/home/nharrand/Documents/paillasse/test/log"
-TASKS="/home/nharrand/Documents/paillasse/test-harness/scripts/tasks"
+REPOS_PATH=$(pwd)
+JARS_PATH="$SCRIPTPATH/lib"
+LOGDIR="$REPOS_PATH/log"
+TASKS="$SCRIPTPATH/tasks"
+
+echo "tasks_path: $TASKS"
 
 echo "Clean up"
 
 cd $REPOS_PATH
+
+if [[ -d $LOGDIR ]]
+then
+    mkdir $LOGDIR
+fi
 
 if [[ -f hostname.json ]]
 then
@@ -24,7 +32,8 @@ echo "Get Name"
 http GET $DISPATCHER_URL/getHostName > hostname.json
 
 HOSTNAME=`jq .workerName hostname.json | sed "s/\"/'workerName:/" | sed "s/\"/'/"`
-HOSTNAME='workerName:Worker-1'
+HOSTNAME=`jq .workerName hostname.json | sed "s/\"/workerName:/" | sed "s/\"//"`
+#HOSTNAME='workerName:Worker-1'
 echo "Get Name $HOSTNAME"
 
 while true
@@ -52,11 +61,6 @@ do
 		break
 	fi
 
-
-	#for task
-	#for raw in $(jq -r '.steps | keys[] as $k | "\($k)|\(.[$k])"' cfg.json); do
-	#for raw in $(jq -c '.steps[]' cfg.json); do
-	#step=$(echo $raw | jq -r .step)
 	raw=$(cat  cfg.json)
     step=$(echo $raw | jq -r .step)
     echo " ------------ $step ------------ "
