@@ -23,7 +23,7 @@ public class ExperimentLine {
 	boolean hasAborted = false;
 
 	public ExperimentLine(List<Step> stepList, Map<String,String> initialStore, String name) {
-		steps.put(new Step("new_experiment_line", new LinkedList<>(), new LinkedList<>()), STATUS.NOT_COMPLETED);
+		steps.put(new Step("NEL", new LinkedList<>(), new LinkedList<>()), STATUS.NOT_COMPLETED);
 		for(Step s: stepList) {
 			steps.put(s, STATUS.NOT_COMPLETED);
 		}

@@ -70,7 +70,7 @@ do
         result="{}"
         repo=$(echo $raw | jq -r .repo)
         cd $repo
-    elif [ $step == "new_experiment_line" ]; then
+    elif [ $step == "NEL" ]; then
         echo " ------------------------ New Config ------------------------ "
         cd $REPOS_PATH
         result="{}"
