@@ -2,8 +2,14 @@
 
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
+if [[ -f worker-config.json ]]
+then
+	DISPATCHER_URL=$(jq .dispatcher_url worker-config.json | sed "s/\"//g")
+else
+	DISPATCHER_URL="$1"
+fi
 #local config
-DISPATCHER_URL="$1"
+
 
 REPOS_PATH=$(pwd)
 JARS_PATH="$SCRIPTPATH/lib"
@@ -38,7 +44,7 @@ echo "Get Name $HOSTNAME"
 
 while true
 do
-    echo " ------------------------ New Step ------------------------ "
+    echo " ---------------------------------------------------------- "
 	if [[ -f cfg.json ]]
 	then
 		rm cfg.json
@@ -63,17 +69,21 @@ do
 
 	raw=$(cat  cfg.json)
     step=$(echo $raw | jq -r .step)
-    echo " ------------ $step ------------ "
+    echo " ------------------------ $step ------------------------ "
     echo " dir: $PWD "
 
     if [ $step == "cd" ]; then
         result="{}"
         repo=$(echo $raw | jq -r .repo)
         cd $repo
+		echo "Post results"
+		echo "{\"step\":\"$step\",\"result\":$result}" | http POST $DISPATCHER_URL/postResult $HOSTNAME
     elif [ $step == "NEL" ]; then
-        echo " ------------------------ New Config ------------------------ "
+        echo " ------------------------------ New Config ------------------------------ "
         cd $REPOS_PATH
         result="{}"
+		echo "Post results"
+		echo "{\"step\":\"$step\",\"result\":$result}" | http POST $DISPATCHER_URL/postResult $HOSTNAME
     else
         #Clean up
         if [[ -f $step.in ]]
@@ -89,6 +99,7 @@ do
         $TASKS/$step.sh
         if [ $? -ne 0 ]; then
             result="{\"failure\":true}"
+			echo "Post failure results"
             echo "{\"step\":\"$step\",\"result\":$result}" | http POST $DISPATCHER_URL/postResult $HOSTNAME
             #break
         else
@@ -98,11 +109,11 @@ do
             else
                 result="{}"
             fi
+			echo "Post results"
+			echo "{\"step\":\"$step\",\"result\":$result}" | http POST $DISPATCHER_URL/postResult $HOSTNAME
 
         fi
     fi
-    echo "Post results"
-    echo "{\"step\":\"$step\",\"result\":$result}" | http POST $DISPATCHER_URL/postResult $HOSTNAME
 
     echo "Step done"
 	#done

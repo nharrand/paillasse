@@ -1,6 +1,6 @@
 #!/bin/bash
 
-JARS_PATH="/home/nharrand/Documents/depswap/test-harness/lib"
+JARS_PATH="/app/lib"
 
 TASK_NAME="transform_pom"
 IN="$TASK_NAME.in"

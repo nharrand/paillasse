@@ -6,4 +6,4 @@ COPY resources /app/resources
 
 WORKDIR /app
 
-CMD ["java", "-jar", "/app/server.jar", "-d", "/data/data_example.csv", "-e", "/data/config_example.json", "-p", "8090"]
+CMD ["java", "-jar", "/app/server.jar", "-d", "/data/data.csv", "-e", "/data/config.json", "-p", "8090"]

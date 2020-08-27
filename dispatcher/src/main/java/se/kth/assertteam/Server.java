@@ -113,7 +113,12 @@ public class Server {
 			log(req);
 			String worker = req.headers("workerName");
 			String raw = req.body();
-			Object parsed = p.parse(raw);
+			Object parsed = null;
+			try {
+				parsed = p.parse(raw);
+			} catch (Exception e) {
+				System.err.println("Error while parsing json");
+			}
 			if(!(parsed instanceof  JSONObject)) {
 				res.status(400);
 				return "Error, unable to parse JSON.";

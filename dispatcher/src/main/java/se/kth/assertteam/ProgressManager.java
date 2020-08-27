@@ -76,15 +76,17 @@ public class ProgressManager {
 		if(hostTasks.containsKey(hostname)) {
 			try {
 				return hostTasks.get(hostname).getCurrentStepJSON();
-			} catch (MalformedStepException e) {
+			} catch (Exception e) {
 				ExperimentLine el = hostTasks.get(hostname);
-				System.out.println("[Progress Manager] abort task " + el);
+				System.err.println("[Progress Manager] abort task " + el + " at " + el.getCurrentStep().name);
 				try {
-					FileUtils.write(logFile, "[Progress Manager] abort task " + el, Charset.defaultCharset(), true);
+					FileUtils.write(logFile, "[Progress Manager] abort task " + el + " at " + el.getCurrentStep().name + "\n", Charset.defaultCharset(), true);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				el.abort();
+				hostTasks.remove(hostname);
+				el.report(resultsFile, resultsColumnOrder, hostname);
 			}
 		}
 
@@ -94,10 +96,10 @@ public class ProgressManager {
 				JSONObject config = el.getCurrentStepJSON();
 				hostTasks.put(hostname, el);
 				return config;
-			} catch (MalformedStepException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				try {
-					FileUtils.write(logFile, "[Progress Manager] abort task ", Charset.defaultCharset(), true);
+					FileUtils.write(logFile, "[Progress Manager] abort task \n", Charset.defaultCharset(), true);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

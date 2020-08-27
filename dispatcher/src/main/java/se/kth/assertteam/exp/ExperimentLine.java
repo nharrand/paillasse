@@ -89,17 +89,18 @@ public class ExperimentLine {
 	public void report(File resultFile, Set<String> columnOrder, String worker) {
 		try {
 			//Worker,Parameters,Results,Status
-			String line = worker;
+			String line = "'" + worker + "'";
 			for(String col: columnOrder) {
-				line += "," + store.get(col);
+				line += ",'" + store.get(col) + "'";
 			}
 			boolean success = !hasAborted;
 			for(STATUS s: steps.values()) {
 				success &= s == STATUS.SUCCESS;
-				line += "," + s.toString();
+				line += ",'" + s.toString() + "'";
 			}
-			line+= "," + success;
+			line+= ",'" + success + "'";
 			FileUtils.write(resultFile, line + "\n", Charset.defaultCharset(), true);
+			System.out.println("[report] " + line);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
