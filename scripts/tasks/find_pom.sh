@@ -15,7 +15,8 @@ poms=$(find $REPO -name "pom.xml" | grep .)
 if [ $? -ne 0 ]; then
 	exit -1
 fi
+echo $poms > $LOG
 pom=$(echo $poms | head -n 1)
-n_repo=$(echo $pom | sed 's/pom.xml//')
+n_repo=$(echo $pom | sed 's/\/pom.xml//')
 
 echo "{\"sucess\":true,\"repo\":\"$n_repo\",\"o_repo\":\"$REPO\",\"pom\":\"$pom\"}" > $OUT
