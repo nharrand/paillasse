@@ -96,8 +96,16 @@ do
         fi
 
         echo $raw > $step.in
-        $TASKS/$step.sh
-        if [ $? -ne 0 ]; then
+
+		#Run the actual step
+        timeout -k 15s 10m $TASKS/$step.sh
+		OUTCOME=$?
+        if [ $OUTCOME -eq 124 ]; then
+			echo "Time out!"
+        fi
+		
+		#Handle outcome
+        if [ $OUTCOME -ne 0 ]; then
             result="{\"failure\":true}"
 			echo "Post failure results"
             echo "{\"step\":\"$step\",\"result\":$result}" | http POST $DISPATCHER_URL/postResult $HOSTNAME
