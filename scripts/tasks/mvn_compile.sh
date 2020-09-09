@@ -9,7 +9,7 @@ PARAM=$(cat $IN)
 
 echo "task: $TASK_NAME with $PARAM"
 
-mvn compile > /dev/null 2>&1
+mvn compile > $LOG 2>&1
 
 if [ $? -eq 0 ]; then
 	echo "{\"sucess\":true}" > $OUT
