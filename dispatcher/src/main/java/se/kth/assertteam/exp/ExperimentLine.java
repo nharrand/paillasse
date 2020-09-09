@@ -18,7 +18,7 @@ public class ExperimentLine {
 	public Map<Step, STATUS> steps = new LinkedHashMap<>();
 	Iterator<Step> iterator;
 	Step current;
-	Map<String,String> store;
+	public Map<String,String> store;
 	String name;
 	boolean hasAborted = false;
 
@@ -48,7 +48,10 @@ public class ExperimentLine {
 		config.put("step", current.name);
 		for(String p: current.parameters) {
 			if(store.containsKey(p)) config.put(p,store.get(p));
-			else throw new MalformedStepException("The store does not contains a value for parameter " + p);
+			else {
+				System.err.println("The store does not contains a value for parameter " + p);
+				throw new MalformedStepException("The store does not contains a value for parameter " + p);
+			}
 		}
 		return config;
 	}

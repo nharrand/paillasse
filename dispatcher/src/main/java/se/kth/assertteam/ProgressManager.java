@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import se.kth.assertteam.exp.ExperimentLine;
 import se.kth.assertteam.exp.MalformedStepException;
+import se.kth.assertteam.exp.Step;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +23,11 @@ public class ProgressManager {
 
 	ConcurrentHashMap<String,ExperimentLine> hostTasks = new ConcurrentHashMap<>();
 	Queue<ExperimentLine> remainingTasks;
+
+	Set<String> expectedInitialStore;
+	List<Step> stepList;
+	String nameKey;
+
 	int successes = 0;
 	int failures = 0;
 
@@ -39,6 +46,11 @@ public class ProgressManager {
 		//Set report column order
 		if(!tasks.isEmpty()) {
 			//First column is worker name.
+			expectedInitialStore = new LinkedHashSet<String>();
+			expectedInitialStore.addAll(tasks.peek().store.entrySet().stream().filter(s-> s.getValue() != null).map(s -> s.getKey()).collect(Collectors.toSet()));
+			stepList = new ArrayList<>();
+			stepList.addAll(tasks.peek().steps.keySet());
+			nameKey = expectedInitialStore.iterator().next();
 
 			//Set of parameters
 			resultsColumnOrder = new LinkedHashSet<String>();
@@ -61,6 +73,25 @@ public class ProgressManager {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	synchronized public boolean addNEL(Map<String,String> initialStore) {
+		String name = initialStore.get(nameKey);
+		//check that initial store contains every expecte keys
+		for(String k: expectedInitialStore) {
+			if(!initialStore.containsKey(k)) {
+				System.err.println("[Progress Manager] cannot add task " + name + ",missing param " + k);
+				try {
+					FileUtils.write(logFile, "[Progress Manager] cannot add task " + name + ",missing param " + k + "\n", Charset.defaultCharset(), true);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				return false;
+			}
+		}
+		ExperimentLine nel = new ExperimentLine(stepList,initialStore,name);
+		remainingTasks.add(nel);
+		return true;
 	}
 
 

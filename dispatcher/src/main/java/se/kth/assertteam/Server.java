@@ -130,6 +130,27 @@ public class Server {
 			return "";
 		});
 
+		//Post new experiment line
+		post("/postNEL", (Request req, Response res) -> {
+			log(req);
+			String raw = req.body();
+			Object parsed = null;
+			try {
+				parsed = p.parse(raw);
+			} catch (Exception e) {
+				System.err.println("Error while parsing json");
+			}
+			if(!(parsed instanceof  JSONObject)) {
+				res.status(400);
+				return "Error, unable to parse JSON.";
+			}
+			JSONObject initialStore = (JSONObject) parsed;
+			boolean success = progressManager.addNEL(initialStore);
+			System.err.println(success ? "Ok" : "KO");
+			res.status(200);
+			return "";
+		});
+
 		//Get Dashboard info
 		get("/getOverview", (Request req, Response res) -> {
 			log(req);
